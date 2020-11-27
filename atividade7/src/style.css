@@ -71,7 +71,6 @@ select{
     color: #fff;
     cursor: pointer;
     font-size: 1em;
-    
 }
 
 select::after{
