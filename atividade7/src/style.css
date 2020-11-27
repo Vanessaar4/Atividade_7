@@ -8,12 +8,12 @@
 body{
     background: purple;
     background-size: cover;
-    height: 120vh;
+    height: 150vh;
 }
 
 .wrapper{
     position: absolute;
-    top: 60%;
+    top: 75%;
     transform: translateY(-50%);
     width: 100%;
     padding: 0 20px;
@@ -42,6 +42,10 @@ body{
     padding: 10px;
     color: #c5ecfd;
     width: 100%;
+}
+
+.error-message{
+    color: #c5ecfd;
 }
 
 ::-webkit-input-placeholder{

@@ -1,15 +1,113 @@
-import {Formik} from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import React from 'react';
+import MaskedInput from 'react-text-mask';
+import cpfNumberMask from './cpfMask';
+import cepMask from './cepMask';
+import matriculaMask from './matriculaMask';
 
-const FormikForm =() => {
-    const handleSubmitting = (values, {setSubmitting}) => {
+const FormLevelValidation = () => {
+    const validateNome = (value) => {
+        let error;
+        if (!value) {
+            error = "Nome é obrigatório!";
+        }
+        return error;
+    }
+
+    const validateIdade = (value) => {
+        let error;
+        if (!value) {
+            error = "Idade é obrigatório!";
+        }
+        if (parseInt(value) < 17) {
+            error = "Precisa ser maior que 16 anos!"
+        }
+        return error;
+    }
+
+    const validateCPF = (value) => {
+        let error;
+        if (!value) {
+            error = "CPF é obrigatório!";
+        }
+        return error;
+    }
+
+    const validateMatricula = (value) => {
+        let error;
+        if (!value) {
+            error = "Matricula é obrigatória!";
+        }
+        return error;
+    }
+
+    const validateCurso = (value) => {
+        let error;
+        if (!value) {
+            error = "Curso é obrigatório!";
+        }
+        return error;
+    }
+
+    const validateCep = (value) => {
+        let error;
+        if (!value) {
+            error = "CEP é obrigatório!";
+        }
+        return error;
+    }
+
+    const validateEndereco = (value) => {
+        let error;
+        if (!value) {
+            error = "Endereço é obrigatório!";
+        }
+        return error;
+    }
+
+    const validateBairro = (value) => {
+        let error;
+        if (!value) {
+            error = "Bairro é obrigatório!";
+        }
+        return error;
+    }
+
+    const validateCidade = (value) => {
+        let error;
+        if (!value) {
+            error = "Cidade é obrigatória";
+        }
+        return error;
+    }
+
+    const onBlurCep = (e, setFieldValue) => {
+        const { value } = e.target;
+        const cep = value?.replace(/[^0-9]/g, '');
+
+        if (cep?.length !== 8) {
+            return;
+        }
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then((res) => res.json())
+            .then((data) => {
+                setFieldValue('bairro', data.bairro);
+                setFieldValue('cidade', data.localidade);
+                setFieldValue('endereco', data.logradouro);
+                setFieldValue('uf', data.uf);
+            })
+
+    }
+
+    const handleSubmitting = (values, { setSubmitting }) => {
         setTimeout(() => {
             console.info(JSON.stringify(values, null, 12));
             setSubmitting(false);
         }, 400);
     }
 
-    return(
+    return (
         <Formik initialValues={{
             nome: '',
             idade: '',
@@ -23,36 +121,142 @@ const FormikForm =() => {
             cidade: '',
             uf: '',
             cep: ''
-        }} onSubmit={handleSubmitting}>
-            {({values, handleChange, handleSubmit, isSubmitting}) => (
-                <form onSubmit={handleSubmit}>
-                    <div className="wrapper">
-                        <div className="reg-form" onSubmit={handleSubmit}>
-                            <div className="register-fields">
-                                <input type="text" className="input" name="nome" placeholder="Nome" value={values.nome} onChange={handleChange} />
-                                <input type="number" className="input" name="idade" placeholder="Idade" value={values.idade} onChange={handleChange} />
-                                <input type="text" className="input" name="cpf" placeholder="CPF" value={values.cpf} onChange={handleChange} />
-                                <input type="text" className="input" name="matricula" placeholder="Matricula" value={values.matricula} onChange={handleChange} />
-                                <input type="text" className="input" name="curso" placeholder="Curso" value={values.curso} onChange={handleChange} />
-                                <input type="text" className="input" name="cep" placeholder="CEP" value={values.cep} onChange={handleChange} />
-                                <input type="text" className="input" name="endereco" placeholder="Endereço" value={values.endereco} onChange={handleChange} />
-                                <input type="text" className="input" name="bairro" placeholder="Bairro" value={values.bairro} onChange={handleChange} />
-                                <input type="text" className="input" name="cidade" placeholder="Cidade" value={values.cidade} onChange={handleChange} />
-                                <input type="text" className="input" name="numero" placeholder="Número" value={values.numero} onChange={handleChange} />
-                                <input type="text" className="input" name="complemento" placeholder="Complemento" value={values.complemento} onChange={handleChange} />
-                                <select className="input" name="uf" value={values.uf} onChange={handleChange} >
-                                    <option value="AA">AA</option>
-                                    <option value="BB">BB</option>
-                                </select>
-                            </div>
-                       
-                        <input type="submit" className="btn" value="Cadastrar" disable={isSubmitting} />
+        }} onSubmit={handleSubmitting} render={({ handleChange, handleBlur, handleSubmit, isSubmitting, setFieldValue }) => (
+            <form onSubmit={handleSubmit}>
+                <div className="wrapper">
+                    <div className="reg-form" onSubmit={handleSubmit}>
+                        <div className="register-fields">
+                            <Field type="text" className="input" name="nome" placeholder="Nome completo*" autoComplete="off"
+                                validate={validateNome}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                            />
+                            <ErrorMessage name="nome" />
+
+                            <Field type="number" className="input" name="idade" placeholder="Idade*" autoComplete="off"
+                                validate={validateIdade}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                            />
+                            <ErrorMessage name="idade" />
+
+                            <Field type="number" name="cpf"
+                                validate={validateCPF}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                render={({ field }) => (
+                                    <MaskedInput {...field}
+                                        mask={cpfNumberMask}
+                                        className="input"
+                                        placeholder="CPF*"
+                                        autoComplete="off"
+
+                                    />
+                                )}
+                            />
+                            <ErrorMessage name="cpf" />
+
+                            <Field type="text" name="matricula"
+                                render={({ field }) => (
+                                    <MaskedInput {...field}
+                                        mask={matriculaMask}
+                                        className="input"
+                                        placeholder="Matricula*"
+                                        autoComplete="off"
+                                        validate={validateMatricula}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                    />
+                                )}
+
+                            />
+                            <ErrorMessage name="matricula" className="error-message" />
+
+                            <Field type="text" className="input" name="curso" placeholder="Curso*" autoComplete="off"
+                                validate={validateCurso}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                            />
+                            <ErrorMessage name="matricula" />
+
+                            <Field type="number" name="cep"
+                                render={({ field }) => (
+                                    <MaskedInput {...field}
+                                        mask={cepMask}
+                                        validate={validateCep}
+                                        onBlur={(e) => onBlurCep(e, setFieldValue)}
+                                        onChange={handleChange}
+                                        className="input"
+                                        placeholder="CEP*"
+                                        autoComplete="off"
+                                    />
+                                )}
+                            />
+
+
+                            <ErrorMessage name="cep" />
+
+                            <Field type="text" className="input" name="endereco" placeholder="Endereço*" autoComplete="off"
+                                validate={validateEndereco}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                            />
+                            <ErrorMessage name="endereco" />
+
+                            <Field type="text" className="input" name="bairro" placeholder="Bairro*" autoComplete="off"
+                                validate={validateBairro}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                            />
+                            <ErrorMessage name="bairro" />
+
+                            <Field type="text" className="input" name="cidade" placeholder="Cidade*" autoComplete="off"
+                                validate={validateCidade}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                            />
+                            <ErrorMessage name="cidade" />
+
+                            <input type="text" className="input" name="numero" placeholder="Número" autoComplete="off" onChange={handleChange} />
+                            <input type="text" className="input" name="complemento" placeholder="Complemento" autoComplete="off" onChange={handleChange} />
+
+                            <Field component="select" className="input" name="uf">
+                                <option value={"AC"}>Acre</option>
+                                <option value={"AL"}>Alagoas</option>
+                                <option value={"AP"}>Amapá</option>
+                                <option value={"AM"}>Amazonas</option>
+                                <option value={"BA"}>Bahia</option>
+                                <option value={"CE"}>Ceará</option>
+                                <option value={"DF"}>Distrito Federal</option>
+                                <option value={"ES"}>Espírito Santo</option>
+                                <option value={"GO"}>Goiás</option>
+                                <option value={"MA"}>Maranhão</option>
+                                <option value={"MT"}>ato Grosso</option>
+                                <option value={"MS"}>Mato Grosso do Sul</option>
+                                <option value={"MG"}>Minas Gerais</option>
+                                <option value={"PA"}>Pará</option>
+                                <option value={"PB"}>Paraíba</option>
+                                <option value={"PR"}>Paraná</option>
+                                <option value={"PE"}>Pernambuco</option>
+                                <option value={"PI"}>Piauí</option>
+                                <option value={"RJ"}>Rio de Janeiro</option>
+                                <option value={"RN"}>Rio Grande do Norte</option>
+                                <option value={"RS"}>Rio Grande do Sul</option>
+                                <option value={"RO"}>Rondônia</option>
+                                <option value={"RR"}>Roraima</option>
+                                <option value={"SS"}>Santa Catarina</option>
+                                <option value={"SP"}>São Paulo</option>
+                                <option value={"SE"}>Sergipe</option>
+                                <option value={"TO"}>Tocantins</option>
+                            </Field>
+                            <ErrorMessage name="uf" />
                         </div>
+                        <input type="submit" className="btn" value="Cadastrar" disable={isSubmitting} />
                     </div>
-                </form>
-            )}
-        </Formik>
-    )
+                </div>
+            </form>
+        )} />
+    );
 }
 
-export default FormikForm;
+export default FormLevelValidation;
