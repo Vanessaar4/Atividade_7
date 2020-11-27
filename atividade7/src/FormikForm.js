@@ -17,7 +17,7 @@ const FormLevelValidation = () => {
     const validateIdade = (value) => {
         let error;
         if (!value) {
-            error = "Idade é obrigatório!";
+            error = "Idade é obrigatória!";
         }
         if (parseInt(value) < 17) {
             error = "Precisa ser maior que 16 anos!"
@@ -76,7 +76,7 @@ const FormLevelValidation = () => {
     const validateCidade = (value) => {
         let error;
         if (!value) {
-            error = "Cidade é obrigatória";
+            error = "Cidade é obrigatória!";
         }
         return error;
     }
@@ -131,14 +131,18 @@ const FormLevelValidation = () => {
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             />
-                            <ErrorMessage name="nome" />
+                            <div className="error-message">
+                                <ErrorMessage name="nome" />
+                            </div>
 
                             <Field type="number" className="input" name="idade" placeholder="Idade*" autoComplete="off"
                                 validate={validateIdade}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             />
-                            <ErrorMessage name="idade" />
+                            <div className="error-message">
+                                <ErrorMessage name="idade" />
+                            </div>
 
                             <Field type="number" name="cpf"
                                 validate={validateCPF}
@@ -154,9 +158,12 @@ const FormLevelValidation = () => {
                                     />
                                 )}
                             />
-                            <ErrorMessage name="cpf" />
+                            <div className="error-message">
+                                <ErrorMessage name="cpf" />
+                            </div>
 
                             <Field type="text" name="matricula"
+                                validate={validateMatricula}
                                 render={({ field }) => (
                                     <MaskedInput {...field}
                                         mask={matriculaMask}
@@ -170,16 +177,21 @@ const FormLevelValidation = () => {
                                 )}
 
                             />
-                            <ErrorMessage name="matricula" className="error-message" />
-
+                            <div className="error-message">
+                                <ErrorMessage name="matricula" className="error-message" />
+                            </div>
+                            
                             <Field type="text" className="input" name="curso" placeholder="Curso*" autoComplete="off"
                                 validate={validateCurso}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             />
-                            <ErrorMessage name="matricula" />
+                            <div className="error-message">
+                                <ErrorMessage name="curso" />
+                            </div>
 
                             <Field type="number" name="cep"
+                                validate={validateCep}
                                 render={({ field }) => (
                                     <MaskedInput {...field}
                                         mask={cepMask}
@@ -192,64 +204,71 @@ const FormLevelValidation = () => {
                                     />
                                 )}
                             />
-
-
-                            <ErrorMessage name="cep" />
+                            <div className="error-message">
+                                <ErrorMessage name="cep" />
+                            </div>
 
                             <Field type="text" className="input" name="endereco" placeholder="Endereço*" autoComplete="off"
                                 validate={validateEndereco}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             />
-                            <ErrorMessage name="endereco" />
+                            <div className="error-message">
+                                <ErrorMessage name="endereco" />
+                            </div>
 
                             <Field type="text" className="input" name="bairro" placeholder="Bairro*" autoComplete="off"
                                 validate={validateBairro}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             />
-                            <ErrorMessage name="bairro" />
+                            <div className="error-message">
+                                <ErrorMessage name="bairro" />
+                            </div>
 
                             <Field type="text" className="input" name="cidade" placeholder="Cidade*" autoComplete="off"
                                 validate={validateCidade}
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             />
-                            <ErrorMessage name="cidade" />
+                            <div className="error-message">
+                                <ErrorMessage name="cidade" />
+                            </div>
 
                             <input type="text" className="input" name="numero" placeholder="Número" autoComplete="off" onChange={handleChange} />
                             <input type="text" className="input" name="complemento" placeholder="Complemento" autoComplete="off" onChange={handleChange} />
-
-                            <Field component="select" className="input" name="uf">
-                                <option value={"AC"}>Acre</option>
-                                <option value={"AL"}>Alagoas</option>
-                                <option value={"AP"}>Amapá</option>
-                                <option value={"AM"}>Amazonas</option>
-                                <option value={"BA"}>Bahia</option>
-                                <option value={"CE"}>Ceará</option>
-                                <option value={"DF"}>Distrito Federal</option>
-                                <option value={"ES"}>Espírito Santo</option>
-                                <option value={"GO"}>Goiás</option>
-                                <option value={"MA"}>Maranhão</option>
-                                <option value={"MT"}>ato Grosso</option>
-                                <option value={"MS"}>Mato Grosso do Sul</option>
-                                <option value={"MG"}>Minas Gerais</option>
-                                <option value={"PA"}>Pará</option>
-                                <option value={"PB"}>Paraíba</option>
-                                <option value={"PR"}>Paraná</option>
-                                <option value={"PE"}>Pernambuco</option>
-                                <option value={"PI"}>Piauí</option>
-                                <option value={"RJ"}>Rio de Janeiro</option>
-                                <option value={"RN"}>Rio Grande do Norte</option>
-                                <option value={"RS"}>Rio Grande do Sul</option>
-                                <option value={"RO"}>Rondônia</option>
-                                <option value={"RR"}>Roraima</option>
-                                <option value={"SS"}>Santa Catarina</option>
-                                <option value={"SP"}>São Paulo</option>
-                                <option value={"SE"}>Sergipe</option>
-                                <option value={"TO"}>Tocantins</option>
-                            </Field>
-                            <ErrorMessage name="uf" />
+                            
+                            <div className="select">
+                                <Field component="select" className="   " name="uf">
+                                    <option value={"AC"}>Acre</option>
+                                    <option value={"AL"}>Alagoas</option>
+                                    <option value={"AP"}>Amapá</option>
+                                    <option value={"AM"}>Amazonas</option>
+                                    <option value={"BA"}>Bahia</option>
+                                    <option value={"CE"}>Ceará</option>
+                                    <option value={"DF"}>Distrito Federal</option>
+                                    <option value={"ES"}>Espírito Santo</option>
+                                    <option value={"GO"}>Goiás</option>
+                                    <option value={"MA"}>Maranhão</option>
+                                    <option value={"MT"}>ato Grosso</option>
+                                    <option value={"MS"}>Mato Grosso do Sul</option>
+                                    <option value={"MG"}>Minas Gerais</option>
+                                    <option value={"PA"}>Pará</option>
+                                    <option value={"PB"}>Paraíba</option>
+                                    <option value={"PR"}>Paraná</option>
+                                    <option value={"PE"}>Pernambuco</option>
+                                    <option value={"PI"}>Piauí</option>
+                                    <option value={"RJ"}>Rio de Janeiro</option>
+                                    <option value={"RN"}>Rio Grande do Norte</option>
+                                    <option value={"RS"}>Rio Grande do Sul</option>
+                                    <option value={"RO"}>Rondônia</option>
+                                    <option value={"RR"}>Roraima</option>
+                                    <option value={"SS"}>Santa Catarina</option>
+                                    <option value={"SP"}>São Paulo</option>
+                                    <option value={"SE"}>Sergipe</option>
+                                    <option value={"TO"}>Tocantins</option>
+                                </Field>
+                            </div>
                         </div>
                         <input type="submit" className="btn" value="Cadastrar" disable={isSubmitting} />
                     </div>
