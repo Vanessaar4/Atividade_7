@@ -1,9 +1,9 @@
 import { Formik, Field, ErrorMessage } from 'formik';
 import React from 'react';
 import MaskedInput from 'react-text-mask';
-import cpfNumberMask from './cpfMask';
-import cepMask from './cepMask';
-import matriculaMask from './matriculaMask';
+import cpfNumberMask from './components/pages/Cadastro/cpfMask';
+import cepMask from './components/pages/Cadastro/cepMask';
+import matriculaMask from './components/pages/Cadastro/matriculaMask';
 
 const FormLevelValidation = () => {
     const validateNome = (value) => {

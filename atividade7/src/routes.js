@@ -1,23 +1,23 @@
-const routes = () =>{
+import React from 'react';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
-    const mysql = require('mysql');
+import About from './components/pages/About'
+import List from "./components/pages/Lista/";
+import Cadastro from "./components/pages/Cadastro/";
+import NavBar from './components/NavBar';
 
-    const con = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'projetotdig'
-    });
+function Routes(){
 
-    const select = () => {
-        con.connect(function (err){
-            if(err) throw err;
-            con.query('SELECT * FROM aluno', function (err, result, fields) {
-                if (err) throw err;
-                return result;
-            });
-        });
-    }
+    return(
+        <BrowserRouter>
+        <NavBar />
+            <Switch>
+                <Route path="/" exact component={List} />
+                <Route path="/cadastro" component={Cadastro} />
+                <Route path="/about" component={About} />
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
-export default routes;
+export default Routes;
