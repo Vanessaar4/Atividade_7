@@ -4,6 +4,7 @@ import MaskedInput from 'react-text-mask';
 import cpfNumberMask from './cepMask';
 import cepMask from './cpfMask';
 import matriculaMask from './matriculaMask';
+import '../../../style.css';
 
 const Cadastro = () => {
     const validateNome = (value) => {

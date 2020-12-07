@@ -10,12 +10,13 @@ function Routes(){
 
     return(
         <BrowserRouter>
-        <NavBar />
+        
             <Switch>
                 <Route path="/" exact component={List} />
                 <Route path="/cadastro" component={Cadastro} />
                 <Route path="/about" component={About} />
             </Switch>
+            <NavBar/>
         </BrowserRouter>
     );
 }

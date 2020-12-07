@@ -13,8 +13,8 @@
 
 .nav-menu {
     background-color: rgba(0,0,0,0.8);
-    width: 250px;
-    height: 100vh;
+    width: 200px;
+    height: 50vh;
     display: flex;
     justify-content: center;
     position: fixed;
