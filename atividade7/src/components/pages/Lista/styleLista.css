@@ -1,16 +1,21 @@
-.wrapper-about{
+.wrapper-lista{
     position: absolute;
-    top: 2%;
+    margin-top: 7%;
     width: 100%;
+    max-width: 200%;
     padding: 0 20px;
 }
 
-.reg-form-about{
-    
-    margin: 75px;
+.reg-form-lista{
+    margin: 0 auto;
     background: rgba(0,0,0,0.8);
     padding: 30px;
     border-radius: 5px;
     display: flow-root;
     box-shadow: 0 0 10px rgba(0,0,0,0.13);
+}
+
+.text-lista{
+    text-align: center;
+    color: #c5ecfd;
 }

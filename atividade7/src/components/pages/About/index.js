@@ -1,9 +1,10 @@
 import React from 'react';
+import './styleAbout.css';
 
 function About() {
     return(
         <div className="wrapper-about">
-            <div className="reg-form">
+            <div className="reg-form-about">
                 <h1 className="text">Sobre</h1>
             </div>
             <div>
